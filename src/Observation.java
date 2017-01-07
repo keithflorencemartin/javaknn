@@ -2,8 +2,8 @@ package javaknn;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-// Represents a vector with a class label and a list of features with corresponding values.  
-public class Vector {
+// Represents an observation vector with a class label and a list of features with corresponding values.  
+public class Observation {
     private LinkedHashMap<Integer, Integer> features = new LinkedHashMap<Integer, Integer>();
     private String classLabel = null;
     

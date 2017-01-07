@@ -3,7 +3,7 @@ Implementation of a k-nearest neighbours algorithm run on sample data in MatrixM
 Neighbours can be weighted or unweighted and their distance can be measured using Euclidian 
 or cosine distance. 
 
-This classification is done in the method kNearestNeighbours.classify, which takes four parameters:
+This classification is done in the method ```kNearestNeighbours.classify```, which takes four parameters:
 * ```test```, a ```Vector``` object to be classified
 * ```train```, an ArrayList of ```Vector``` objects of known class
 * ```K```, the number of neighbours which will vote on the class label

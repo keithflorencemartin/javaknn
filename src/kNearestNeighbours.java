@@ -10,7 +10,7 @@ public class kNearestNeighbours {
     // Prints the percentage accuracy achieved with each configuration. 
     // NB: takes several minutes to run. 
     public static void main(String[] args) {
-        ArrayList<Vector> inputVectors = FileHandler.read("data/observations.mtx", "data/classes.labels");
+        ArrayList<Observation> inputObservations = FileHandler.read("data/observations.mtx", "data/classes.labels");
         
         System.out.println("LEAVE-ONE-OUT CROSS VALIDATION FOR WEIGHTED KNN\n***********************************\nK\t\tAccuracy");
         // For each k.
@@ -18,24 +18,24 @@ public class kNearestNeighbours {
             int correct = 0;
             int incorrect = 0;
             
-            // Loops over the dataset of Vector objects. 
-            for (int i = 0; i < inputVectors.size(); i++){
-                // Gets the ith Vector, records its label and removes it from the list.
-                Vector test = inputVectors.get(i);
+            // Loops over the dataset of Observation objects. 
+            for (int i = 0; i < inputObservations.size(); i++){
+                // Gets the ith Observation, records its label and removes it from the list.
+                Observation test = inputObservations.get(i);
                 String trueLabel = test.getClassLabel();
-                inputVectors.remove(i);
+                inputObservations.remove(i);
 
-                // Resets the Vector's label and tries to guess it using the classifier. 
+                // Resets the Observation's label and tries to guess it using the classifier. 
                 test.setClassLabel(null);
-                test = classify(test, inputVectors, K, "cosine", true);
+                test = classify(test, inputObservations, K, "cosine", true);
 
                 // Records whether the guess was correct.
                 if (test.getClassLabel().equals(trueLabel)) { correct += 1; }
                 else { incorrect += 1; }
 
-                // Resets the label and adds the Vector back to the list. 
+                // Resets the label and adds the Observation back to the list. 
                 test.setClassLabel(trueLabel);
-                inputVectors.add(i, test);
+                inputObservations.add(i, test);
             } 
     
             // Calculates and prints the proportion of correct answers. 
@@ -49,24 +49,24 @@ public class kNearestNeighbours {
             int correct = 0;
             int incorrect = 0;
             
-            // Loops over the dataset of Vector objects. 
-            for (int i = 0; i < inputVectors.size(); i++){
-                // Gets the ith vector, records its label and removes it from the list.
-                Vector test = inputVectors.get(i);
+            // Loops over the dataset of Observation objects. 
+            for (int i = 0; i < inputObservations.size(); i++){
+                // Gets the ith Observation, records its label and removes it from the list.
+                Observation test = inputObservations.get(i);
                 String trueLabel = test.getClassLabel();
-                inputVectors.remove(i);
+                inputObservations.remove(i);
 
-                // Resets the vector's label and tries to guess it using the classifier. 
+                // Resets the Observation's label and tries to guess it using the classifier. 
                 test.setClassLabel(null);
-                test = classify(test, inputVectors, K, "cosine", false);
+                test = classify(test, inputObservations, K, "cosine", false);
 
                 // Records whether the guess was correct.
                 if (test.getClassLabel().equals(trueLabel)) { correct += 1; }
                 else { incorrect += 1; }
 
-                // Resets the label and adds the vector back to the list. 
+                // Resets the label and adds the Observation back to the list. 
                 test.setClassLabel(trueLabel);
-                inputVectors.add(i, test);
+                inputObservations.add(i, test);
             } 
     
             // Calculates and prints the proportion of correct answers. 
@@ -76,15 +76,15 @@ public class kNearestNeighbours {
     }
     
     /* 
-     * Takes a vector of unknown class and gives it a class label based on the votes of its k-nearest neighbours.
+     * Takes a Observation of unknown class and gives it a class label based on the votes of its k-nearest neighbours.
      * Parameters:
-     *  - test: a Vector object of unknown class
-     *  - train: an ArrayList of Vectors of known class
+     *  - test: a Observation object of unknown class
+     *  - train: an ArrayList of Observations of known class
      *  - K: the number of neighbours which will vote on the class label
      *  - distanceMeasure: the method by which neighbour distances will be calculated
      *  - weighted: true if neighbour votes are to be weighted based on closeness
      *  */
-    public static Vector classify(Vector test, ArrayList<Vector> train, int K, String distanceMeasure, boolean weighted){
+    public static Observation classify(Observation test, ArrayList<Observation> train, int K, String distanceMeasure, boolean weighted){
         // Calculates the neighbour distances between the test example and each training example. 
         Neighbour[] neighbours = new Neighbour[train.size()];
         for (int i = 0; i < neighbours.length; i++){

@@ -2,7 +2,7 @@ package javaknn;
 import java.util.Set;
 
 public class Distance {
-    public static double getEuclid(Vector a, Vector b){
+    public static double getEuclid(Observation a, Observation b){
         double squaredDistance = 0; 
 
         // Iterates over the features of a.
@@ -28,7 +28,7 @@ public class Distance {
         return Math.sqrt(squaredDistance);
     }
 
-    publie static double getCosine(Vector a, Vector b){
+    public static double getCosine(Observation a, Observation b){
         // Simultaneously calculates the norm of a and the dot product of a and b. 
         double normA = 0;
         int dotProduct = 0;
@@ -52,7 +52,7 @@ public class Distance {
             normB += Math.pow(b.getFeature(feature), 2);
         normB = Math.sqrt(normB);
     
-        // Returns the cosine distance of the two vectors (1-similarity). 
+        // Returns the cosine distance of the two Observation vectors (1-similarity). 
         double distance = 1 - (dotProduct / (normA * normB));
         if (distance < 0) // Negative number due to floating-point error
             return 0;
